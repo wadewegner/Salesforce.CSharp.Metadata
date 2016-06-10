@@ -16,46 +16,28 @@ var loginResult = await partnerClient.Login(Username, Password, ApiVersion);
 ###  Describe Metadata
 
 ```csharp
-var metadataClient = new MetadataClient();
-var describeMetadataResult = await metadataClient.DescribeMetadata(
-  loginResult.MetadataServerUrl,
-  loginResult.SessionId);
+var metadataClient = new MetadataClient(loginResult.MetadataServerUrl, loginResult.SessionId);
+var describeMetadataResult = await metadataClient.DescribeMetadata();
 ```
 
 ### List Metadata
 
 ```csharp
-var listMetadataResult = await metadataClient.ListMetadata(
-  "CustomObject",
-  loginResult.MetadataServerUrl,
-  loginResult.SessionId);
-    
-listMetadataResult = await metadataClient.ListMetadata(
-  "ApexClass",
-  loginResult.MetadataServerUrl,
-  loginResult.SessionId);
-  
-listMetadataResult = await metadataClient.ListMetadata(
-  "AuraDefinitionBundle",
-  loginResult.MetadataServerUrl,
-  loginResult.SessionId);
+var customObjects = await metadataClient.ListMetadata("CustomObject");
+var apexClasses = await metadataClient.ListMetadata("ApexClass");
+var auraDefinitionBundle = await metadataClient.ListMetadata("AuraDefinitionBundle");
 ```
 
 ### Retrieve Metadata
 
 ```csharp
-var retrieveResult = await metadataClient.Retrieve(
-  loginResult.MetadataServerUrl,
-  loginResult.SessionId);
+var retrieveResult = await metadataClient.Retrieve();
 ```
 
 ### Check Retrieve Metadata Status
 
 ```csharp
-var checkRetrieveStatusResult = await metadataClient.CheckRetrieveStatus(
-  loginResult.MetadataServerUrl,
-  loginResult.SessionId,
-  retrieveResult.Id);
+var checkRetrieveStatusResult = await metadataClient.CheckRetrieveStatus(retrieveResult.Id);
 ```
 
 
