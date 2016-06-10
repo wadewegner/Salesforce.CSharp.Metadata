@@ -28,7 +28,7 @@ namespace Salesforce.SOAP.APIs.Metadata
             return result;
         }
         
-        public async Task<ListMetadataResponse> ListMetadata(string url, string sessionId, string apiVersion)
+        public async Task<ListMetadataResponse> ListMetadata(string type, string url, string sessionId, string apiVersion)
         {
             var soap = string.Format(@"
 <soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -40,12 +40,12 @@ namespace Salesforce.SOAP.APIs.Metadata
     <soapenv:Body>
         <listMetadata xmlns=""http://soap.sforce.com/2006/04/metadata"">
             <queries>
-                <type>CustomObject</type>
+                <type>{1}</type>
             </queries>
-            <asOfVersion>{1}</asOfVersion>
+            <asOfVersion>{2}</asOfVersion>
         </listMetadata>
     </soapenv:Body>
-</soapenv:Envelope>", sessionId, apiVersion);
+</soapenv:Envelope>", sessionId, type, apiVersion);
 
             var xmlDescendants = XNamespace.Get("http://soap.sforce.com/2006/04/metadata") + "listMetadataResponse";
             var result = await HttpUtility.Post<ListMetadataResponse>(url, soap, xmlDescendants);
@@ -122,6 +122,29 @@ namespace Salesforce.SOAP.APIs.Metadata
 
             var xmlDescendants = XNamespace.Get("http://soap.sforce.com/2006/04/metadata") + "result";
             var result = await HttpUtility.Post<RetrieveResponseResult>(url, soap, xmlDescendants);
+
+            return result;
+        }
+
+
+        public async Task<CheckRetrieveStatusResponseResult> CheckRetrieveStatus(string url, string sessionId, string processId)
+        {
+            var soap = string.Format(@"
+<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">
+    <soapenv:Header>
+        <SessionHeader xmlns=""http://soap.sforce.com/2006/04/metadata"">
+            <sessionId>{0}</sessionId>
+        </SessionHeader>
+    </soapenv:Header>
+    <soapenv:Body>
+        <checkRetrieveStatus xmlns=""http://soap.sforce.com/2006/04/metadata"">
+            <asyncProcessId>{1}</asyncProcessId>
+        </checkRetrieveStatus>
+    </soapenv:Body>
+</soapenv:Envelope>", sessionId, processId);
+
+            var xmlDescendants = XNamespace.Get("http://soap.sforce.com/2006/04/metadata") + "result";
+            var result = await HttpUtility.Post<CheckRetrieveStatusResponseResult>(url, soap, xmlDescendants);
 
             return result;
         }

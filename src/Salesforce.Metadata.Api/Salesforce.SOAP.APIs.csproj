@@ -36,7 +36,8 @@
   <ItemGroup>
     <Compile Include="HttpUtility.cs" />
     <Compile Include="Metadata\MetadataClient.cs" />
-    <Compile Include="Metadata\Models\Class1.cs" />
+    <Compile Include="Metadata\Models\CheckRetrieveStatusResponseResult.cs" />
+    <Compile Include="Metadata\Models\CheckRetrieveStatusResponseResultFileProperties.cs" />
     <Compile Include="Metadata\Models\ListMetadataResponse.cs" />
     <Compile Include="Metadata\Models\DescribeMetadataResponseResult.cs" />
     <Compile Include="Metadata\Models\DescribeMetadataResponseResultMetadataObjects.cs" />
