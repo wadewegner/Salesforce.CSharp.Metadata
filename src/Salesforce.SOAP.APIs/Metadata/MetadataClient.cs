@@ -6,7 +6,18 @@ namespace Salesforce.SOAP.APIs.Metadata
 {
     public class MetadataClient
     {
-        public async Task<DescribeMetadataResponseResult> DescribeMetadata(string url, string sessionId, string apiVersion)
+        private string _url;
+        private string _sessionId;
+        private string _apiVersion;
+
+        public MetadataClient(string url, string sessionId, string apiVersion = "36.0")
+        {
+            _url = url;
+            _sessionId = sessionId;
+            _apiVersion = apiVersion;
+        }
+
+        public async Task<DescribeMetadataResponseResult> DescribeMetadata()
         {
             var soap = string.Format(@"
 <soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -20,15 +31,15 @@ namespace Salesforce.SOAP.APIs.Metadata
             <asOfVersion>{1}</asOfVersion>
         </describeMetadata>
     </soapenv:Body>
-</soapenv:Envelope>", sessionId, apiVersion);
+</soapenv:Envelope>", _sessionId, _apiVersion);
 
             var xmlDescendants = XNamespace.Get("http://soap.sforce.com/2006/04/metadata") + "result";
-            var result = await HttpUtility.Post<DescribeMetadataResponseResult>(url, soap, xmlDescendants);
+            var result = await HttpUtility.Post<DescribeMetadataResponseResult>(_url, soap, xmlDescendants);
 
             return result;
         }
         
-        public async Task<ListMetadataResponse> ListMetadata(string type, string url, string sessionId, string apiVersion)
+        public async Task<ListMetadataResponse> ListMetadata(string type)
         {
             var soap = string.Format(@"
 <soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -45,15 +56,15 @@ namespace Salesforce.SOAP.APIs.Metadata
             <asOfVersion>{2}</asOfVersion>
         </listMetadata>
     </soapenv:Body>
-</soapenv:Envelope>", sessionId, type, apiVersion);
+</soapenv:Envelope>", _sessionId, type, _apiVersion);
 
             var xmlDescendants = XNamespace.Get("http://soap.sforce.com/2006/04/metadata") + "listMetadataResponse";
-            var result = await HttpUtility.Post<ListMetadataResponse>(url, soap, xmlDescendants);
+            var result = await HttpUtility.Post<ListMetadataResponse>(_url, soap, xmlDescendants);
 
             return result;
         }
 
-        public async Task<RetrieveResponseResult> Retrieve(string url, string sessionId, string apiVersion)
+        public async Task<RetrieveResponseResult> Retrieve()
         {
             var soap = string.Format(@"
 <soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -118,16 +129,15 @@ namespace Salesforce.SOAP.APIs.Metadata
             </retrieveRequest>
         </retrieve>
     </soapenv:Body>
-</soapenv:Envelope>", sessionId, apiVersion);
+</soapenv:Envelope>", _sessionId, _apiVersion);
 
             var xmlDescendants = XNamespace.Get("http://soap.sforce.com/2006/04/metadata") + "result";
-            var result = await HttpUtility.Post<RetrieveResponseResult>(url, soap, xmlDescendants);
+            var result = await HttpUtility.Post<RetrieveResponseResult>(_url, soap, xmlDescendants);
 
             return result;
         }
 
-
-        public async Task<CheckRetrieveStatusResponseResult> CheckRetrieveStatus(string url, string sessionId, string processId)
+        public async Task<CheckRetrieveStatusResponseResult> CheckRetrieveStatus(string processId)
         {
             var soap = string.Format(@"
 <soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -141,10 +151,10 @@ namespace Salesforce.SOAP.APIs.Metadata
             <asyncProcessId>{1}</asyncProcessId>
         </checkRetrieveStatus>
     </soapenv:Body>
-</soapenv:Envelope>", sessionId, processId);
+</soapenv:Envelope>", _sessionId, processId);
 
             var xmlDescendants = XNamespace.Get("http://soap.sforce.com/2006/04/metadata") + "result";
-            var result = await HttpUtility.Post<CheckRetrieveStatusResponseResult>(url, soap, xmlDescendants);
+            var result = await HttpUtility.Post<CheckRetrieveStatusResponseResult>(_url, soap, xmlDescendants);
 
             return result;
         }

@@ -2,6 +2,7 @@
 using Salesforce.SOAP.APIs.Metadata;
 using Salesforce.SOAP.APIs.Metadata.Models;
 using Salesforce.SOAP.APIs.Partner;
+using Salesforce.SOAP.APIs.Partner.Models;
 
 namespace Salesforce.SOAP.APIs.Tests
 {
@@ -10,13 +11,24 @@ namespace Salesforce.SOAP.APIs.Tests
     {
         private const string Username = "";
         private const string Password = "";
-        private const string ApiVersion = "36.0";
+
+        private LoginResult _loginResult;
+        private MetadataClient _metadataClient;
+
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            var partnerClient = new PartnerClient();
+
+            _loginResult = partnerClient.Login(Username, Password).Result;
+            _metadataClient = new MetadataClient(_loginResult.MetadataServerUrl, _loginResult.SessionId);
+        }
 
         [Test]
         public async void Login()
         {
             var partnerClient = new PartnerClient();
-            var loginResult = await partnerClient.Login(Username, Password, ApiVersion);
+            var loginResult = await partnerClient.Login(Username, Password);
 
             Assert.IsNotNull(loginResult);
             Assert.IsNotNull(loginResult.MetadataServerUrl);
@@ -26,14 +38,7 @@ namespace Salesforce.SOAP.APIs.Tests
         [Test]
         public async void DescribeMetadata()
         {
-            var partnerClient = new PartnerClient();
-            var loginResult = await partnerClient.Login(Username, Password);
-
-            var metadataClient = new MetadataClient();
-            var describeMetadataResult = await metadataClient.DescribeMetadata(
-                loginResult.MetadataServerUrl,
-                loginResult.SessionId,
-                ApiVersion);
+            var describeMetadataResult = await _metadataClient.DescribeMetadata();
 
             Assert.IsNotNull(describeMetadataResult);
             Assert.IsNotNull(describeMetadataResult.MetadataObjects);
@@ -45,43 +50,23 @@ namespace Salesforce.SOAP.APIs.Tests
         [Test]
         public async void ListMetadata()
         {
-            var partnerClient = new PartnerClient();
-            var loginResult = await partnerClient.Login(Username, Password);
-
-            var metadataClient = new MetadataClient();
-            var listMetadataResult = await metadataClient.ListMetadata(
-                "CustomObject",
-                loginResult.MetadataServerUrl,
-                loginResult.SessionId,
-                ApiVersion);
+            var listMetadataResult = await _metadataClient.ListMetadata("CustomObject");
 
             Assert.IsNotNull(listMetadataResult);
             Assert.IsNotNull(listMetadataResult.Result);
 
-            listMetadataResult = await metadataClient.ListMetadata(
-                "ApexClass",
-                loginResult.MetadataServerUrl,
-                loginResult.SessionId,
-                ApiVersion);
+            listMetadataResult = await _metadataClient.ListMetadata("ApexClass");
 
             Assert.IsNotNull(listMetadataResult);
             Assert.IsNotNull(listMetadataResult.Result);
 
-            listMetadataResult = await metadataClient.ListMetadata(
-                "Profile",
-                loginResult.MetadataServerUrl,
-                loginResult.SessionId,
-                ApiVersion);
+            listMetadataResult = await _metadataClient.ListMetadata("Profile");
 
             Assert.IsNotNull(listMetadataResult);
             Assert.IsNotNull(listMetadataResult.Result);
 
             //AuraDefinitionBundle
-            listMetadataResult = await metadataClient.ListMetadata(
-                "AuraDefinitionBundle",
-                loginResult.MetadataServerUrl,
-                loginResult.SessionId,
-                ApiVersion);
+            listMetadataResult = await _metadataClient.ListMetadata("AuraDefinitionBundle");
 
             Assert.IsNotNull(listMetadataResult);
             Assert.IsNotNull(listMetadataResult.Result);
@@ -90,14 +75,7 @@ namespace Salesforce.SOAP.APIs.Tests
         [Test]
         public async void Retrieve()
         {
-            var partnerClient = new PartnerClient();
-            var loginResult = await partnerClient.Login(Username, Password);
-
-            var metadataClient = new MetadataClient();
-            var retrieveResult = await metadataClient.Retrieve(
-                loginResult.MetadataServerUrl,
-                loginResult.SessionId,
-                ApiVersion);
+            var retrieveResult = await _metadataClient.Retrieve();
 
             Assert.IsNotNull(retrieveResult);
             Assert.IsNotNull(retrieveResult.Done);
@@ -110,35 +88,26 @@ namespace Salesforce.SOAP.APIs.Tests
         [Test]
         public async void CheckRetrieveStatus()
         {
-            var partnerClient = new PartnerClient();
-            var loginResult = await partnerClient.Login(Username, Password);
-
-            var metadataClient = new MetadataClient();
-
-            var retrieveResult = await metadataClient.Retrieve(
-                loginResult.MetadataServerUrl,
-                loginResult.SessionId,
-                ApiVersion);
+            var retrieveResult = await _metadataClient.Retrieve();
 
             var status = "InProgress";
             CheckRetrieveStatusResponseResult checkRetrieveStatusResult = null;
 
-            while (status == "InProgress")
+            while (status != "Succeeded")
             {
-                checkRetrieveStatusResult = await metadataClient.CheckRetrieveStatus(
-                   loginResult.MetadataServerUrl,
-                   loginResult.SessionId,
-                   retrieveResult.Id);
+                checkRetrieveStatusResult = await _metadataClient.CheckRetrieveStatus(retrieveResult.Id);
 
                 Assert.IsNotNull(checkRetrieveStatusResult);
 
                 status = checkRetrieveStatusResult.Status;
             }
 
-            Assert.AreEqual(checkRetrieveStatusResult.Status, "Succeeded");
-            Assert.AreEqual(checkRetrieveStatusResult.Success, true);
-            Assert.IsNotNull(checkRetrieveStatusResult.ZipFile);
-            
+            if (checkRetrieveStatusResult != null)
+            {
+                Assert.AreEqual("Succeeded", checkRetrieveStatusResult.Status);
+                Assert.AreEqual(true, checkRetrieveStatusResult.Success);
+                Assert.IsNotNull(checkRetrieveStatusResult.ZipFile);
+            }
         }
     }
 }
