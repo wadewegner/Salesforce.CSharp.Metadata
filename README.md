@@ -38,6 +38,20 @@ var retrieveResult = await metadataClient.Retrieve();
 
 ```csharp
 var checkRetrieveStatusResult = await metadataClient.CheckRetrieveStatus(retrieveResult.Id);
+
+if (checkRetrieveStatusResult.Status == "Succeeded")
+{
+  var toBytes = Convert.FromBase64String(checkRetrieveStatusResult.ZipFile);
+  var fileName = checkRetrieveStatusResult.Id + ".zip";
+  var extractPath = checkRetrieveStatusResult.Id;
+  
+  using (var fs = new FileStream(fileName, FileMode.Create))
+  {
+    fs.Write(toBytes, 0, toBytes.Length);
+  }
+  
+  ZipFile.ExtractToDirectory(fileName, extractPath);
+}
 ```
 
 
