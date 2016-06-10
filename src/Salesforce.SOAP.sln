@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salesforce.SOAP.APIs", "Salesforce.Metadata.Api\Salesforce.SOAP.APIs.csproj", "{2BCCA96B-C828-40D3-9E50-6E95292A822A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salesforce.SOAP.APIs.Tests", "Salesforce.Metadata.Api.Tests\Salesforce.SOAP.APIs.Tests.csproj", "{FD76AF68-94F2-4BC7-B0ED-01AC73ABAD20}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7543019D-0912-4B66-A47E-7C14AD4943F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salesforce.SOAP.APIs.Tests", "Salesforce.SOAP.APIs.Tests\Salesforce.SOAP.APIs.Tests.csproj", "{FD76AF68-94F2-4BC7-B0ED-01AC73ABAD20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salesforce.SOAP.APIs", "Salesforce.SOAP.APIs\Salesforce.SOAP.APIs.csproj", "{2BCCA96B-C828-40D3-9E50-6E95292A822A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +15,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2BCCA96B-C828-40D3-9E50-6E95292A822A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BCCA96B-C828-40D3-9E50-6E95292A822A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BCCA96B-C828-40D3-9E50-6E95292A822A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BCCA96B-C828-40D3-9E50-6E95292A822A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD76AF68-94F2-4BC7-B0ED-01AC73ABAD20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD76AF68-94F2-4BC7-B0ED-01AC73ABAD20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD76AF68-94F2-4BC7-B0ED-01AC73ABAD20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD76AF68-94F2-4BC7-B0ED-01AC73ABAD20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BCCA96B-C828-40D3-9E50-6E95292A822A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BCCA96B-C828-40D3-9E50-6E95292A822A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BCCA96B-C828-40D3-9E50-6E95292A822A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BCCA96B-C828-40D3-9E50-6E95292A822A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
