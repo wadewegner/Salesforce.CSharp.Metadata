@@ -7,8 +7,8 @@
     <ProjectGuid>{FD76AF68-94F2-4BC7-B0ED-01AC73ABAD20}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Salesforce.Metadata.Api.Tests</RootNamespace>
-    <AssemblyName>Salesforce.Metadata.Api.Tests</AssemblyName>
+    <RootNamespace>Salesforce.SOAP.APIs.Tests</RootNamespace>
+    <AssemblyName>Salesforce.SOAP.APIs.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -50,13 +50,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Salesforce.Metadata.Api\Salesforce.Metadata.Api.csproj">
+    <ProjectReference Include="..\Salesforce.Metadata.Api\Salesforce.SOAP.APIs.csproj">
       <Project>{2bcca96b-c828-40d3-9e50-6e95292a822a}</Project>
-      <Name>Salesforce.Metadata.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Salesforce.Partner.Api\Salesforce.Partner.Api.csproj">
-      <Project>{37850452-1fa6-431a-96a5-3c4334f6c6cd}</Project>
-      <Name>Salesforce.Partner.Api</Name>
+      <Name>Salesforce.SOAP.APIs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

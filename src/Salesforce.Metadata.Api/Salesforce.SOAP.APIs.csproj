@@ -8,8 +8,8 @@
     <ProjectGuid>{2BCCA96B-C828-40D3-9E50-6E95292A822A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Salesforce.Metadata.Api</RootNamespace>
-    <AssemblyName>Salesforce.Metadata.Api</AssemblyName>
+    <RootNamespace>Salesforce.SOAP.APIs</RootNamespace>
+    <AssemblyName>Salesforce.SOAP.APIs</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,14 +34,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="MetadataClient.cs" />
-    <Compile Include="Models\DescribeMetadataResponseResult.cs" />
-    <Compile Include="Models\DescribeMetadataResponseResultMetadataObjects.cs" />
+    <Compile Include="HttpUtility.cs" />
+    <Compile Include="Metadata\MetadataClient.cs" />
+    <Compile Include="Metadata\Models\Class1.cs" />
+    <Compile Include="Metadata\Models\ListMetadataResponse.cs" />
+    <Compile Include="Metadata\Models\DescribeMetadataResponseResult.cs" />
+    <Compile Include="Metadata\Models\DescribeMetadataResponseResultMetadataObjects.cs" />
+    <Compile Include="Metadata\Models\ListMetadataResponseResult.cs" />
+    <Compile Include="Metadata\Models\RetrieveResponseResult.cs" />
+    <Compile Include="Partner\Models\LoginResult.cs" />
+    <Compile Include="Partner\Models\UserInfoResult.cs" />
+    <Compile Include="Partner\PartnerClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

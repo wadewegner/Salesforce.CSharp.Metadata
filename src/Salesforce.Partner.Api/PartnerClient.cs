@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Salesforce.Metadata.Api;
 using Salesforce.Partner.Api.Models;
 
 namespace Salesforce.Partner.Api
@@ -15,6 +16,22 @@ namespace Salesforce.Partner.Api
     {
         public async Task<LoginResult> Login(string userName, string password, string version = "36.0")
         {
+            var soap = string.Format(@"
+<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">
+    <soapenv:Body>
+        <login xmlns=""urn:partner.soap.sforce.com"">
+            <username>{0}</username>
+            <password>{1}</password>
+        </login>
+    </soapenv:Body>
+</soapenv:Envelope>", userName, password);
+
+            var xmlDescendants = XNamespace.Get("urn:partner.soap.sforce.com") + "result";
+            var result = await HttpUtility.Post<LoginResult>(url, soap, xmlDescendants);
+
+            return result;
+
+
             var url = string.Format("https://login.salesforce.com/services/Soap/u/{0}", version);
             var soap = string.Format(@"
 <soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">
