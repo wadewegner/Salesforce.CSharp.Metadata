@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Salesforce.SOAP.APIs.Metadata.Models;
 
@@ -124,6 +125,34 @@ namespace Salesforce.SOAP.APIs.Metadata
                         <members>OpportunityContactRole</members>
                         <members>Contract</members>
                         <name>CustomObject</name>
+                    </types>
+                    <types>
+                        <members>*</members>
+                        <name>Profile</name>
+                    </types>
+                    <types>
+                        <members>*</members>
+                        <name>StaticResource</name>
+                    </types>
+                    <types>
+                        <members>*</members>
+                        <name>ApexComponent</name>
+                    </types>
+                    <types>
+                        <members>*</members>
+                        <name>ApexPage</name>
+                    </types>
+                    <types>
+                        <members>*</members>
+                        <name>ApexTrigger</name>
+                    </types>
+                    <types>
+                        <members>*</members>
+                        <name>ApexClass</name>
+                    </types>
+                    <types>
+                        <members>*</members>
+                        <name>AuraDefinitionBundle</name>
                     </types>
                 </unpackaged>
             </retrieveRequest>

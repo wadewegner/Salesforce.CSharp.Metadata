@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.IO;
+using System.IO.Compression;
+using NUnit.Framework;
 using Salesforce.SOAP.APIs.Metadata;
 using Salesforce.SOAP.APIs.Metadata.Models;
 using Salesforce.SOAP.APIs.Partner;
@@ -107,6 +110,21 @@ namespace Salesforce.SOAP.APIs.Tests
                 Assert.AreEqual("Succeeded", checkRetrieveStatusResult.Status);
                 Assert.AreEqual(true, checkRetrieveStatusResult.Success);
                 Assert.IsNotNull(checkRetrieveStatusResult.ZipFile);
+
+                var toBytes = Convert.FromBase64String(checkRetrieveStatusResult.ZipFile);
+                var fileName = checkRetrieveStatusResult.Id + ".zip";
+
+                using (var fs = new FileStream(fileName, FileMode.Create))
+                {
+                    fs.Write(toBytes, 0, toBytes.Length);
+                }
+
+                var extractPath = checkRetrieveStatusResult.Id;
+
+                ZipFile.ExtractToDirectory(fileName, extractPath);
+
+                File.Delete(fileName);
+                Directory.Delete(extractPath, true);
             }
         }
     }
